@@ -10,9 +10,6 @@ window.addEventListener("load", (e) => {
             mutatedHTML = mutatedHTML.replace("veg", "");
 
             mutation.target.innerHTML = mutatedHTML;
-
-            console.log(mutation);
-            console.log(observer);
         });
     });
 
@@ -25,18 +22,34 @@ window.addEventListener("load", (e) => {
     });
 
     setTimeout(() => {
-        // document.body.style.backgroundColor = "green";
-        let lunchList = document.querySelector("#lunchList")
-        if (lunchList) {
-            let lunchPara = lunchList.getElementsByTagName("p")[0];
-            console.log(lunchPara);
-            lunchPara.innerText = lunchPara.innerText.replace("veg", "");
-        }
+        var nodeIterator = document.createNodeIterator(
+            document.body,
+            NodeFilter.SHOW_ELEMENT,
+            (node) => {
+                return node.nodeName.toLowerCase() === 'p' ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+            }
+        );
+        var pars = [];
+        var currentNode;
 
-        let snacksList = document.querySelector("#snacksList");
-        if (snacksList) {
-            let snacksPara = snacksList.getElementsByTagName("p")[0];
-            snacksPara.innerText = snacksPara.innerText.replace("veg", "");
+        while (currentNode = nodeIterator.nextNode()) {
+            pars.push(currentNode);
         }
+        console.log(pars);
+        // document.getElementsByTagName("*").forEach((element) => {
+        //     console.log(element);
+        // });
+        //     let lunchList = document.querySelector("#lunchList");
+        //     if (lunchList) {
+        //         let lunchPara = lunchList.getElementsByTagName("p")[0];
+        //         console.log(lunchPara);
+        //         lunchPara.innerText = lunchPara.innerText.replace("veg", "");
+        //     }
+
+        //     let snacksList = document.querySelector("#snacksList");
+        //     if (snacksList) {
+        //         let snacksPara = snacksList.getElementsByTagName("p")[0];
+        //         snacksPara.innerText = snacksPara.innerText.replace("veg", "");
+        //     }
     }, 1000);
 }, false);
