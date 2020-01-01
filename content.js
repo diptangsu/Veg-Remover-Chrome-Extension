@@ -1,20 +1,30 @@
 // @ts-nocheck
 window.addEventListener("load", (e) => {
+    MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+
+    var observer = new MutationObserver((mutations, observer) => {
+        mutations.forEach((mutation) => {
+            let mutatedHTML = mutation.target.innerHTML;
+            mutatedHTML = mutatedHTML.replace("Chapati", "Ruti");
+            mutatedHTML = mutatedHTML.replace("Veg", "");
+            mutatedHTML = mutatedHTML.replace("veg", "");
+
+            mutation.target.innerHTML = mutatedHTML;
+
+            console.log(mutation);
+            console.log(observer);
+        });
+    });
+
+    // define what element should be observed by the observer
+    // and what types of mutations trigger the callback
+    observer.observe(document, {
+        subtree: true,
+        attributes: true
+        //...
+    });
+
     setTimeout(() => {
-        MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-
-        var observer = new MutationObserver((mutations, observer) => {
-            console.log(mutations, observer);
-        });
-
-        // define what element should be observed by the observer
-        // and what types of mutations trigger the callback
-        observer.observe(document, {
-            subtree: true,
-            attributes: true
-            //...
-        });
-
         // document.body.style.backgroundColor = "green";
         let lunchList = document.querySelector("#lunchList")
         if (lunchList) {
