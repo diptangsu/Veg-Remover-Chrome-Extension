@@ -1,0 +1,30 @@
+{
+    "manifest_version": 2,
+    "name": "Veg Remover",
+    "version": "0.1",
+    "description": "Change all occurances of `veg` to non-veg OR remove all occurances of `veg` from a webpage.",
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content.js",
+                "jquery-3.4.1.min.js"
+            ]
+        }
+    ],
+    "background": {
+        "persistent": true,
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "browser_action": {
+        "default_icon": "icon.png"
+    },
+    "permissions": [
+        "contextMenus",
+        "activeTab"
+    ]
+}
