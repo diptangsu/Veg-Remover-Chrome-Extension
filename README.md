@@ -1,4 +1,4 @@
-# Veg Remover Chrome Extension
+# VEG Remover Chrome Extension
 Removes all occurances of the word *VEG* from a webpage
 
 ## Installation
