@@ -1,5 +1,5 @@
 # Veg Remover Chrome Extension
-Removes all occurances of the word *veg* from a webpage
+Removes all occurances of the word *VEG* from a webpage
 
 ## Installation
  - Clone this repository
