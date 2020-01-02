@@ -5,11 +5,14 @@ window.addEventListener("load", (e) => {
     var observer = new MutationObserver((mutations, observer) => {
         mutations.forEach((mutation) => {
             let mutatedHTML = mutation.target.innerHTML;
-            mutatedHTML = mutatedHTML.replace("Chapati", "Ruti");
-            mutatedHTML = mutatedHTML.replace("Veg", "");
-            mutatedHTML = mutatedHTML.replace("veg", "");
+            mutatedHTML = mutatedHTML
+                .replace("Chapati", "Ruti")
+                .replace("Veg", "")
+                .replace("veg", "");
 
-            mutation.target.innerHTML = mutatedHTML;
+            if (mutation.target.innerHTML !== mutatedHTML) {
+                mutation.target.innerHTML = mutatedHTML;
+            }
         });
     });
 
@@ -18,38 +21,33 @@ window.addEventListener("load", (e) => {
     observer.observe(document, {
         subtree: true,
         attributes: true
-        //...
     });
 
     setTimeout(() => {
+        let tags = ['p', 'h1', 'h2', 'h3', 'h4', 'h5'];
         var nodeIterator = document.createNodeIterator(
             document.body,
             NodeFilter.SHOW_ELEMENT,
             (node) => {
-                return node.nodeName.toLowerCase() === 'p' ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+                return tags.includes(node.nodeName.toLowerCase()) ?
+                    NodeFilter.FILTER_ACCEPT
+                    : NodeFilter.FILTER_REJECT;
+                // return node.nodeName.toLowerCase() === 'h2'
+                //     ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
             }
         );
-        var pars = [];
+
         var currentNode;
-
         while (currentNode = nodeIterator.nextNode()) {
-            pars.push(currentNode);
-        }
-        console.log(pars);
-        // document.getElementsByTagName("*").forEach((element) => {
-        //     console.log(element);
-        // });
-        //     let lunchList = document.querySelector("#lunchList");
-        //     if (lunchList) {
-        //         let lunchPara = lunchList.getElementsByTagName("p")[0];
-        //         console.log(lunchPara);
-        //         lunchPara.innerText = lunchPara.innerText.replace("veg", "");
-        //     }
+            let text = currentNode.innerHTML;
+            text = text
+                .replace("veg", "")
+                .replace("Veg", "")
+                .replace("Chapati", "Ruti");
 
-        //     let snacksList = document.querySelector("#snacksList");
-        //     if (snacksList) {
-        //         let snacksPara = snacksList.getElementsByTagName("p")[0];
-        //         snacksPara.innerText = snacksPara.innerText.replace("veg", "");
-        //     }
-    }, 1000);
+            if (currentNode.innerHTML !== text) {
+                currentNode.innerHTML = text;
+            }
+        }
+    }, 500);
 }, false);
